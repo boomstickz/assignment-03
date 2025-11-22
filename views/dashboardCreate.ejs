@@ -1,0 +1,19 @@
+<%- include("./partials/header.ejs") %>
+
+<h2>Create New Dashboard</h2>
+
+<form action="/dashboards/create" method="POST">
+  <div class="mb-3">
+    <label class="form-label">Title</label>
+    <input type="text" name="title" class="form-control" required>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Description</label>
+    <textarea name="description" class="form-control" rows="5"></textarea>
+  </div>
+
+  <button class="btn btn-success">Create Dashboard</button>
+</form>
+
+<%- include("./partials/footer.ejs") %>

@@ -1,0 +1,26 @@
+<%- include("./partials/header.ejs") %>
+
+<h2>Your Dashboards</h2>
+
+<a href="/dashboards/create" class="btn btn-primary mb-3">Create New Dashboard</a>
+
+<div class="row">
+  <% dashboards.forEach(d => { %>
+    <div class="col-md-4">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title"><%= d.title %></h5>
+          <p class="card-text"><%= d.description.substring(0, 80) %>...</p>
+
+          <a href="/dashboards/edit/<%= d._id %>" class="btn btn-sm btn-warning">Edit</a>
+
+          <form action="/dashboards/delete/<%= d._id %>" method="POST" style="display:inline;">
+            <button class="btn btn-sm btn-danger">Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  <% }) %>
+</div>
+
+<%- include("./partials/footer.ejs") %>
