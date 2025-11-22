@@ -11,6 +11,8 @@ const app = express();
 // Body + Static
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+app.use("/uploads", express.static("public/uploads"));
+
 
 // Sessions
 app.use(

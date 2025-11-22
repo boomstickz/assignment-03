@@ -4,31 +4,31 @@ const express = require("express");
 const router = express.Router();
 const dashboardController = require("../controllers/dashboardController");
 
-// Dashboard List
-router.get("/", dashboardController.listDashboards);
+// Dashboard List 
+router.get("/", requireAuth, dashboardController.listDashboards);
 
-// Create Dashboard
+// Create Dashboard (Protected)
 router.get("/create", requireAuth, dashboardController.createDashboardPage);
 router.post(
-  "/create", requireAuth,
+  "/create",
+  requireAuth,
   upload.array("images", 10),
   dashboardController.createDashboard
 );
 
-
-// Edit Dashboard
+// Edit Dashboard (Protected)
 router.get("/edit/:id", requireAuth, dashboardController.editDashboardPage);
 router.post(
-  "/edit/:id", requireAuth,
+  "/edit/:id",
+  requireAuth,
   upload.array("images", 10),
   dashboardController.updateDashboard
 );
 
-
-// Delete Dashboard
+// Delete Dashboard (Protected)
 router.post("/delete/:id", requireAuth, dashboardController.deleteDashboard);
 
-// SHOW DASHBOARD
+// Show Dashboard (Protected)
 router.get("/:id", requireAuth, dashboardController.showDashboard);
 
 module.exports = router;

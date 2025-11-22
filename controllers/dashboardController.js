@@ -45,22 +45,28 @@ module.exports.editDashboardPage = async (req, res) => {
 module.exports.updateDashboard = async (req, res) => {
   const { title, description, tags, abilities, colors } = req.body;
 
-  const update = {
-    title,
-    description,
-    tags: tags ? tags.split(",").map(x => x.trim()) : [],
-    abilities: abilities ? abilities.split(",").map(x => x.trim()) : [],
-    colors: colors ? colors.split(",").map(x => x.trim()) : []
-  };
+  const dash = await Dashboard.findById(req.params.id);
 
-  // If new images were uploaded
-  if (req.files.length > 0) {
-    update.$push = { images: { $each: req.files.map(f => f.filename) } };
+  if (!dash) return res.redirect("/dashboards");
+
+  // Update simple fields
+  dash.title = title;
+  dash.description = description;
+  dash.tags = tags ? tags.split(",").map(x => x.trim()) : [];
+  dash.abilities = abilities ? abilities.split(",").map(x => x.trim()) : [];
+  dash.colors = colors ? colors.split(",").map(x => x.trim()) : [];
+
+  // Handle new images
+  if (req.files && req.files.length > 0) {
+    const newImages = req.files.map(f => f.filename);
+    dash.images.push(...newImages);
   }
 
-  await Dashboard.findByIdAndUpdate(req.params.id, update);
+  await dash.save();
+
   res.redirect("/dashboards/" + req.params.id);
 };
+
 
 
 // DELETE ACTION

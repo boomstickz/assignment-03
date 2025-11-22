@@ -2,16 +2,51 @@
 
 <h2>Edit Dashboard</h2>
 
-<form action="/dashboards/edit/<%= dash._id %>" method="POST">
+<form action="/dashboards/edit/<%= dash._id %>" method="POST" enctype="multipart/form-data">
+
+  <!-- Title -->
   <div class="mb-3">
     <label class="form-label">Title</label>
     <input type="text" name="title" value="<%= dash.title %>" class="form-control">
   </div>
 
+  <!-- Description -->
   <div class="mb-3">
     <label class="form-label">Description</label>
     <textarea name="description" class="form-control" rows="5"><%= dash.description %></textarea>
   </div>
+
+  <!-- Existing Images -->
+  <h4>Current Images</h4>
+  <div class="row mb-3">
+    <% dash.images.forEach(img => { %>
+      <div class="col-md-3">
+        <img src="/uploads/<%= img %>" class="img-fluid rounded mb-2">
+      </div>
+    <% }) %>
+  </div>
+
+  <!-- Add new images -->
+  <label class="form-label">Upload New Images (optional):</label>
+  <input type="file" name="images" multiple class="form-control mb-3">
+
+  <!-- Tags -->
+  <label class="form-label">Tags (comma separated):</label>
+  <input type="text" name="tags"
+         value="<%= dash.tags.join(', ') %>"
+         class="form-control mb-3">
+
+  <!-- Abilities -->
+  <label class="form-label">Abilities (comma separated):</label>
+  <input type="text" name="abilities"
+         value="<%= dash.abilities.join(', ') %>"
+         class="form-control mb-3">
+
+  <!-- Colors -->
+  <label class="form-label">Colors (comma separated):</label>
+  <input type="text" name="colors"
+         value="<%= dash.colors.join(', ') %>"
+         class="form-control mb-3">
 
   <button class="btn btn-primary">Save Changes</button>
 </form>
