@@ -1,20 +1,34 @@
+const { requireAuth } = require("../middleware/auth");
+const upload = require("../middleware/upload");
 const express = require("express");
 const router = express.Router();
 const dashboardController = require("../controllers/dashboardController");
-const { isLoggedIn } = require("../middleware/auth");
 
 // Dashboard List
-router.get("/", isLoggedIn, dashboardController.getAllDashboards);
+router.get("/", dashboardController.listDashboards);
 
 // Create Dashboard
-router.get("/create", isLoggedIn, dashboardController.createPage);
-router.post("/create", isLoggedIn, dashboardController.createDashboard);
+router.get("/create", requireAuth, dashboardController.createDashboardPage);
+router.post(
+  "/create", requireAuth,
+  upload.array("images", 10),
+  dashboardController.createDashboard
+);
+
 
 // Edit Dashboard
-router.get("/edit/:id", isLoggedIn, dashboardController.editPage);
-router.post("/edit/:id", isLoggedIn, dashboardController.updateDashboard);
+router.get("/edit/:id", requireAuth, dashboardController.editDashboardPage);
+router.post(
+  "/edit/:id", requireAuth,
+  upload.array("images", 10),
+  dashboardController.updateDashboard
+);
+
 
 // Delete Dashboard
-router.post("/delete/:id", isLoggedIn, dashboardController.deleteDashboard);
+router.post("/delete/:id", requireAuth, dashboardController.deleteDashboard);
+
+// SHOW DASHBOARD
+router.get("/:id", requireAuth, dashboardController.showDashboard);
 
 module.exports = router;
