@@ -4,6 +4,29 @@
 
 <p><%= dash.description %></p>
 
+<h3>Images</h3>
+<div class="row">
+  <% dash.images.forEach(img => { %>
+    <div class="col-md-3 mb-3">
+      <img src="/uploads/<%= img %>" class="img-fluid rounded">
+    </div>
+  <% }) %>
+</div>
+
+<h3>Tags</h3>
+<p><%= dash.tags.join(", ") %></p>
+
+<h3>Abilities</h3>
+<ul>
+  <% dash.abilities.forEach(a => { %>
+    <li><%= a %></li>
+  <% }) %>
+</ul>
+
+<h3>Colors</h3>
+<p><%= dash.colors.join(", ") %></p>
+
+
 <hr>
 
 <a href="/dashboards/edit/<%= dash._id %>" class="btn btn-warning">Edit</a>
