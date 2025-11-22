@@ -2,7 +2,8 @@
 
 <h2>Create New Dashboard</h2>
 
-<form action="/dashboards/create" method="POST">
+<form action="/dashboards/create" method="POST" enctype="multipart/form-data">
+
   <div class="mb-3">
     <label class="form-label">Title</label>
     <input type="text" name="title" class="form-control" required>
@@ -13,7 +14,25 @@
     <textarea name="description" class="form-control" rows="5"></textarea>
   </div>
 
+  <!-- Images -->
+  <label>Images:</label>
+  <input type="file" name="images" multiple class="form-control mb-3">
+
+  <!-- Tags -->
+  <label>Tags (comma separated):</label>
+  <input type="text" name="tags" placeholder="wind, air, nature" class="form-control mb-3">
+
+  <!-- Abilities -->
+  <label>Abilities (comma separated):</label>
+  <input type="text" name="abilities" placeholder="gust, flight, slicing wind" class="form-control mb-3">
+
+  <!-- Colors -->
+  <label>Colors (comma separated hex or rgb):</label>
+  <input type="text" name="colors" placeholder="#66f, #88c, #aaf" class="form-control mb-3">
+
   <button class="btn btn-success">Create Dashboard</button>
+
 </form>
+
 
 <%- include("./partials/footer.ejs") %>
