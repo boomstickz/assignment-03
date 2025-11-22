@@ -1,0 +1,15 @@
+<%- include("./partials/header.ejs") %>
+
+<h2><%= dash.title %></h2>
+
+<p><%= dash.description %></p>
+
+<hr>
+
+<a href="/dashboards/edit/<%= dash._id %>" class="btn btn-warning">Edit</a>
+
+<form action="/dashboards/delete/<%= dash._id %>" method="POST" style="display:inline;">
+  <button class="btn btn-danger">Delete</button>
+</form>
+
+<%- include("./partials/footer.ejs") %>
