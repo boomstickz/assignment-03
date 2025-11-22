@@ -13,11 +13,18 @@ module.exports.createDashboardPage = (req, res) => {
 
 // CREATE ACTION
 module.exports.createDashboard = async (req, res) => {
+  const { title, description, tags, abilities, colors } = req.body;
+
   await Dashboard.create({
-    title: req.body.title,
-    description: req.body.description,
-    owner: req.session.userId
+    title,
+    description,
+    owner: req.session.userId,
+    images: req.files.map(f => f.filename),
+    tags: tags ? tags.split(",").map(x => x.trim()) : [],
+    abilities: abilities ? abilities.split(",").map(x => x.trim()) : [],
+    colors: colors ? colors.split(",").map(x => x.trim()) : []
   });
+
   res.redirect("/dashboards");
 };
 
@@ -36,12 +43,25 @@ module.exports.editDashboardPage = async (req, res) => {
 
 // UPDATE ACTION
 module.exports.updateDashboard = async (req, res) => {
-  await Dashboard.findByIdAndUpdate(req.params.id, {
-    title: req.body.title,
-    description: req.body.description
-  });
+  const { title, description, tags, abilities, colors } = req.body;
+
+  const update = {
+    title,
+    description,
+    tags: tags ? tags.split(",").map(x => x.trim()) : [],
+    abilities: abilities ? abilities.split(",").map(x => x.trim()) : [],
+    colors: colors ? colors.split(",").map(x => x.trim()) : []
+  };
+
+  // If new images were uploaded
+  if (req.files.length > 0) {
+    update.$push = { images: { $each: req.files.map(f => f.filename) } };
+  }
+
+  await Dashboard.findByIdAndUpdate(req.params.id, update);
   res.redirect("/dashboards/" + req.params.id);
 };
+
 
 // DELETE ACTION
 module.exports.deleteDashboard = async (req, res) => {
