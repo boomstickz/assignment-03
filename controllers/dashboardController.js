@@ -1,37 +1,50 @@
 const Dashboard = require("../models/Dashboard");
 
-module.exports = {
-  getAllDashboards: async (req, res) => {
-    const dashboards = await Dashboard.find({ owner: req.session.userId });
-    res.render("dashboardList", { dashboards });
-  },
+// LIST ALL DASHBOARDS
+module.exports.listDashboards = async (req, res) => {
+  const dashboards = await Dashboard.find({ owner: req.session.userId }).lean();
+  res.render("dashboardList", { dashboards });
+};
 
-  createPage: (req, res) => res.render("dashboardCreate"),
+// CREATE PAGE
+module.exports.createDashboardPage = (req, res) => {
+  res.render("dashboardCreate");
+};
 
-  createDashboard: async (req, res) => {
-    await Dashboard.create({
-      title: req.body.title,
-      description: req.body.description,
-      owner: req.session.userId
-    });
-    res.redirect("/dashboards");
-  },
+// CREATE ACTION
+module.exports.createDashboard = async (req, res) => {
+  await Dashboard.create({
+    title: req.body.title,
+    description: req.body.description,
+    owner: req.session.userId
+  });
+  res.redirect("/dashboards");
+};
 
-  editPage: async (req, res) => {
-    const dash = await Dashboard.findById(req.params.id);
-    res.render("dashboardEdit", { dash });
-  },
+// SHOW DASHBOARD
+module.exports.showDashboard = async (req, res) => {
+  const dash = await Dashboard.findById(req.params.id).lean();
+  if (!dash) return res.redirect("/dashboards");
+  res.render("dashboardShow", { dash });
+};
 
-  updateDashboard: async (req, res) => {
-    await Dashboard.findByIdAndUpdate(req.params.id, {
-      title: req.body.title,
-      description: req.body.description
-    });
-    res.redirect("/dashboards");
-  },
+// EDIT PAGE
+module.exports.editDashboardPage = async (req, res) => {
+  const dash = await Dashboard.findById(req.params.id).lean();
+  res.render("dashboardEdit", { dash });
+};
 
-  deleteDashboard: async (req, res) => {
-    await Dashboard.findByIdAndDelete(req.params.id);
-    res.redirect("/dashboards");
-  }
+// UPDATE ACTION
+module.exports.updateDashboard = async (req, res) => {
+  await Dashboard.findByIdAndUpdate(req.params.id, {
+    title: req.body.title,
+    description: req.body.description
+  });
+  res.redirect("/dashboards/" + req.params.id);
+};
+
+// DELETE ACTION
+module.exports.deleteDashboard = async (req, res) => {
+  await Dashboard.findByIdAndDelete(req.params.id);
+  res.redirect("/dashboards");
 };
