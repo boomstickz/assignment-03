@@ -82,3 +82,27 @@ module.exports.deleteDashboard = async (req, res) => {
   await Dashboard.findByIdAndDelete(req.params.id);
   res.redirect("/dashboards");
 };
+
+module.exports.removeImage = async (req, res) => {
+  const { id } = req.params;
+  const { imageName } = req.body;
+
+  const dash = await Dashboard.findById(id);
+  if (!dash) return res.redirect("/dashboards");
+
+  // Remove from array
+  dash.images = dash.images.filter(img => img !== imageName);
+
+  await dash.save();
+
+  // OPTIONAL: delete actual file from /public/uploads
+  const fs = require("fs");
+  const path = require("path");
+  const filePath = path.join(__dirname, "..", "public", "uploads", imageName);
+  
+  if (fs.existsSync(filePath)) {
+    fs.unlinkSync(filePath);
+  }
+
+  res.redirect("/dashboards/edit/" + id);
+};
