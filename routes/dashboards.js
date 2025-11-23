@@ -4,10 +4,10 @@ const express = require("express");
 const router = express.Router();
 const dashboardController = require("../controllers/dashboardController");
 
-// Dashboard List 
-router.get("/", requireAuth, dashboardController.listDashboards);
+// DASHBOARD LIST (public or protected depending on your design)
+router.get("/", dashboardController.listDashboards);
 
-// Create Dashboard (Protected)
+// CREATE DASHBOARD
 router.get("/create", requireAuth, dashboardController.createDashboardPage);
 router.post(
   "/create",
@@ -16,7 +16,13 @@ router.post(
   dashboardController.createDashboard
 );
 
-// Edit Dashboard (Protected)
+// DELETE CONFIRMATION PAGE
+router.get("/delete/:id", requireAuth, dashboardController.deleteDashboardPage);
+
+// DELETE ACTION (POST)
+router.post("/delete/:id", requireAuth, dashboardController.deleteDashboard);
+
+// EDIT DASHBOARD
 router.get("/edit/:id", requireAuth, dashboardController.editDashboardPage);
 router.post(
   "/edit/:id",
@@ -25,10 +31,7 @@ router.post(
   dashboardController.updateDashboard
 );
 
-// Delete Dashboard (Protected)
-router.post("/delete/:id", requireAuth, dashboardController.deleteDashboard);
-
-// Show Dashboard (Protected)
+// SHOW DASHBOARD (MUST ALWAYS BE LAST)
 router.get("/:id", requireAuth, dashboardController.showDashboard);
 
 module.exports = router;

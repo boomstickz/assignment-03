@@ -1,0 +1,12 @@
+<%- include("./partials/header.ejs") %>
+
+<h2>Delete Dashboard</h2>
+
+<p>Are you sure you want to delete <strong><%= dash.title %></strong>?</p>
+
+<form action="/dashboards/delete/<%= dash._id %>" method="POST">
+  <button class="btn btn-danger">Yes, Delete</button>
+  <a href="/dashboards/<%= dash._id %>" class="btn btn-secondary">Cancel</a>
+</form>
+
+<%- include("./partials/footer.ejs") %>

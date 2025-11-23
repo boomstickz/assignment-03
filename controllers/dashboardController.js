@@ -70,6 +70,14 @@ module.exports.updateDashboard = async (req, res) => {
 
 
 // DELETE ACTION
+
+module.exports.deleteDashboardPage = async (req, res) => {
+  const dash = await Dashboard.findById(req.params.id).lean();
+  if (!dash) return res.redirect("/dashboards");
+  res.render("dashboardDelete", { dash });
+};
+
+
 module.exports.deleteDashboard = async (req, res) => {
   await Dashboard.findByIdAndDelete(req.params.id);
   res.redirect("/dashboards");
