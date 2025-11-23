@@ -1,16 +1,326 @@
-.github-link svg {
-  transition: 0.2s ease-in-out;
+/* FONTS */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
+
+
+/* GLOBAL */
+body {
+    margin: 0;
+    padding: 0;
+    background: radial-gradient(circle at center 40%, rgba(120,200,255,0.20) 0%, rgba(0,0,0,0) 85%),
+                linear-gradient(to bottom, #043a59 0%, #021c2b 40%, #000 100%);
+    background-attachment: fixed;
+    font-family: 'Inter', sans-serif;
+    color: #e6e6e6;
+}
+a { color: #d7e7ff; }
+a:hover {
+    color: #9cd6ff;
+    text-shadow: 0 0 6px rgba(100,200,255,0.6);
+}
+html, body { overflow-x: hidden; }
+
+
+/* HEADINGS */
+h1:not(.codex-title),
+h2:not(.codex-title),
+h3:not(.codex-title),
+h4:not(.codex-title),
+h5:not(.codex-title),
+h6:not(.codex-title),
+.brand-title {
+    font-family: 'Cinzel Decorative', serif;
+    color: #d9b95f !important;
+    letter-spacing: 1px;
+    font-weight: 700;
+    text-shadow:
+        0 0 6px rgba(107,214,255,0.45),
+        0 0 12px rgba(107,214,255,0.25),
+        0 0 22px rgba(107,214,255,0.15);
 }
 
-.github-link:hover svg {
-  fill: #b8b8ff;     /* glowing arcane blue hover */
-  transform: scale(1.1);
+
+/* HEADER */
+nav.navbar {
+    height: 110px !important;
+    font-size: 1.2rem;
 }
 
+.brand-book-icon {
+    height: 50px;
+    margin-right: 12px;
+    transition: 0.25s;
+}
+.brand-book-icon:hover {
+    filter: drop-shadow(0 0 10px rgba(120,200,255,0.75));
+}
+
+.brand-hover-glow:hover .brand-title {
+    text-shadow: 0 0 10px rgba(120,200,255,0.9) !important;
+    color: #f5e7b5 !important;
+}
+
+.navbar .nav-link {
+    font-family: 'Cinzel Decorative', serif;
+    color: #d9b95f !important;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    display: inline-flex !important;
+    align-items: center;
+    gap: 6px;
+    transition: 0.2s ease;
+}
+.navbar .nav-link:hover {
+    color: #f5e7b5 !important;
+    text-shadow: 0 0 10px rgba(140,220,255,0.8);
+}
+
+.nav-star {
+    color: #7ed9ff;
+    text-shadow: 0 0 6px #7ed9ff;
+    font-size: 1rem;
+}
+
+
+/* HOME PAGE */
+.home-aura-wrapper {
+    position: relative;
+    display: inline-block;
+    margin-top: 140px !important;
+}
+.home-aura-circle {
+    display: none !important;
+}
+
+.home-book-image {
+    height: 165px;
+    z-index: 2;
+    position: relative;
+    transition: 0.25s ease-in-out;
+}
+.home-book-image:hover {
+    filter: drop-shadow(0 0 14px rgba(120,210,255,0.7));
+}
+
+.home-title {
+    color: #d9b95f;
+    font-size: 3rem;
+    letter-spacing: 2px;
+    font-family: 'Cinzel Decorative', serif;
+    text-shadow:
+        0 0 8px rgba(107,214,255,0.45),
+        0 0 16px rgba(107,214,255,0.3),
+        0 0 28px rgba(107,214,255,0.2);
+}
+
+.home-description {
+    color: white !important;
+    opacity: 0.92;
+    font-size: 1.08rem;
+    max-width: 620px;
+    margin: 18px auto 0 auto;
+}
+
+
+/* FORMS */
+input, textarea, select {
+    background: rgba(255,255,255,0.08) !important;
+    border: 1px solid rgba(255,255,255,0.18) !important;
+    color: white !important;
+    padding: 10px !important;
+    border-radius: 6px !important;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+form label, .form-label {
+    color: white !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: rgba(255,255,255,0.75) !important;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color:#6bd6ff !important;
+    box-shadow:0 0 10px rgba(107,214,255,0.5);
+    outline: none;
+}
+
+.btn {
+    border: none !important;
+    padding: 10px 18px !important;
+    border-radius: 6px !important;
+    font-weight: 600;
+}
+.btn-primary { background:#6bd6ff !important; color:black !important; }
+.btn-warning { background:#d9b95f !important; color:black !important; }
+.btn-danger { background:#d9534f !important; color:white !important; }
+
+
+/* DASHBOARD CARDS */
+.codex-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.codex-card {
+    background: rgba(255,255,255,0.06);
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.15);
+    overflow: hidden;
+    transition: 0.25s ease;
+    display:flex;
+    flex-direction:column;
+    height: 270px;
+}
+
+.codex-card:hover {
+    border-color:#6bd6ff;
+    transform:translateY(-6px);
+    box-shadow:0 0 20px rgba(107,214,255,0.55);
+}
+
+/* Allow proper wrapping so multi-image layouts fit the card */
+
+.codex-card-images {
+    width: 100%;
+    height: 185px;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+/* no images */
+.codex-placeholder {
+    width:100%;
+    height:185px;
+    background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(5px);
+}
+
+/* 1 color */
+.codex-colored-bg {
+    width:100%;
+    height:185px;
+}
+
+/* Default rule */
+.codex-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;        
+    object-position: center;
+    background: #000;
+}
+
+/* 1 image */
+.codex-img.one-img {
+    width: 100%;
+    height: 185px;
+    object-fit: cover;
+}
+
+/* 2 images */
+.codex-img.two-img {
+    width: 50%;
+    height: 100%;
+    object-fit: cover !important;
+    aspect-ratio: 1 / 1;  
+}
+
+/* 3 images */
+.codex-img.three-img-top {
+    width: 100%;
+    height: 110px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.codex-img-row {
+    width: 100%;
+    height: 75px;
+    display: flex;
+}
+
+.codex-img.three-img-bottom {
+    width: 50%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* 4 images */
+.codex-img-grid {
+    width: 100%;
+    height: 185px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 92.5px 92.5px; 
+    overflow: hidden; 
+}
+.codex-img.four-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* ensures proper cropping */
+}
+
+
+.codex-content {
+    background: rgba(0,0,0,0.45);
+    padding:12px;
+}
+
+/* title */
+.codex-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.26rem;
+    font-weight: 700;
+    color: inherit;       /* allow inline EJS color to win */
+    text-shadow: none;    /* no forced glow */
+}
+
+/* description always white */
+.codex-desc {
+    color:#f5f5f5 !important;
+}
+
+
+/* color bar */
+.codex-color-bar {
+    width:100%;
+    height:7px;
+}
+
+/* SHOW / EDIT PAGES */
+.dashboard-section label,
+.dashboard-section p,
+.dashboard-section li {
+    color:white !important;
+}
 
 .edit-image-preview {
-  height: 200px;        /* consistent height */
-  width: auto;          /* maintains aspect ratio */
-  object-fit: cover;    /* crops nicely, keeps image centered */
-  border-radius: 8px;
+    height:200px;
+    width:100%;
+    object-fit:cover;
+    border-radius:8px;
+}
+
+/* FOOTER */
+footer {
+    color:#e0d6c2;
+    text-align:center;
+    padding:20px 0;
+    margin-top:80px;
+    font-size:0.9rem;
+}
+
+.github-link svg {
+    transition:0.25s;
+}
+.github-link:hover svg {
+    fill:#b8b8ff;
+    transform:scale(1.15);
 }
