@@ -1,0 +1,16 @@
+.github-link svg {
+  transition: 0.2s ease-in-out;
+}
+
+.github-link:hover svg {
+  fill: #b8b8ff;     /* glowing arcane blue hover */
+  transform: scale(1.1);
+}
+
+
+.edit-image-preview {
+  height: 200px;        /* consistent height */
+  width: auto;          /* maintains aspect ratio */
+  object-fit: cover;    /* crops nicely, keeps image centered */
+  border-radius: 8px;
+}
