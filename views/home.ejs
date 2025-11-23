@@ -1,17 +1,29 @@
 <%- include("./partials/header.ejs") %>
 
-<div class="text-center mt-5">
+<div class="d-flex justify-content-center">
+  <div class="home-aura-wrapper text-center mt-5">
 
-  <img src="/images/closed-book.png" alt="Closed Codex" style="height:130px;">
+    <!-- Aura Glow -->
+    <div class="home-aura-circle"></div>
 
-  <h1 class="mt-3 fw-bold">The Power Codex</h1>
+    <!-- Book -->
+    <img src="/images/closed-book.png" class="home-book-image" alt="Closed Codex">
 
-  <p>
-    <a href="/auth/login" class="me-2">Login</a> 
-    |
-    <a href="/auth/register" class="ms-2">Register</a>
-  </p>
+    <!-- Title & Description -->
 
+
+    <h1 class="home-title mt-3 fw-bold">THE POWER CODEX</h1>
+
+    <p class="home-description">
+     A creative dashboard for organizing and developing ideas including,
+    abilities, artifacts, powers, lore entries, images, colors, and more — all in one unified Codex.
+    </p>
+
+
+
+    </p>
+
+  </div>
 </div>
 
 <%- include("./partials/footer.ejs") %>

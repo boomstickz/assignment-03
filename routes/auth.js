@@ -4,7 +4,10 @@ const authController = require("../controllers/authController");
 
 // Register + Login Pages
 router.get("/login", authController.loginPage);
-router.get("/register", authController.registerPage);
+router.get("/register", (req, res) => {
+  res.render("register", { error: null });
+});
+
 
 // Form Submissions
 router.post("/login", authController.loginUser);

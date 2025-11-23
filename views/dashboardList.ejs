@@ -1,31 +1,109 @@
 <%- include("./partials/header.ejs") %>
 
-<h2>Your Dashboards</h2>
+<h2></h2>
 
 <% if (session && session.userId) { %>
   <a href="/dashboards/create" class="btn btn-primary mb-3">Create New Dashboard</a>
 <% } %>
 
-<div class="row">
-  <% dashboards.forEach(d => { %>
+<div class="row g-4">
+
+  <% dashboards.forEach(d => { 
+      const images = d.images || [];
+      const colors = d.colors || [];
+      const hasImages = images.length > 0;
+
+      const mainColor = colors.length > 0 ? colors[0] : "#ffffff";
+      const gradient = colors.length > 1 ? colors.join(",") : null;
+  %>
+
     <div class="col-md-4">
-      <div class="card mb-3" style="cursor:pointer;">
-        <div class="card-body">
+      <a href="/dashboards/<%= d._id %>" class="codex-card-link">
 
-          <!-- Clickable Title -->
-          <h5 class="card-title">
-            <a href="/dashboards/<%= d._id %>" class="text-dark" style="text-decoration:none;">
-              <%= d.title %>
-            </a>
-          </h5>
+        <div class="codex-card">
 
-          <!-- Description preview -->
-          <p class="card-text"><%= d.description.substring(0, 80) %>...</p>
+          <!-- IMAGE AREA -->
+          <div class="codex-card-images">
+
+            <% if (hasImages) { %>
+
+              <% if (images.length === 1) { %>
+                <img src="/uploads/<%= images[0] %>" class="codex-img one-img">
+              <% } else if (images.length === 2) { %>
+                <img src="/uploads/<%= images[0] %>" class="codex-img two-img">
+                <img src="/uploads/<%= images[1] %>" class="codex-img two-img">
+              <% } else if (images.length === 3) { %>
+                <img src="/uploads/<%= images[0] %>" class="codex-img three-img-top">
+                <div class="codex-img-row">
+                  <img src="/uploads/<%= images[1] %>" class="codex-img three-img-bottom">
+                  <img src="/uploads/<%= images[2] %>" class="codex-img three-img-bottom">
+                </div>
+              <% } else { %>
+                <div class="codex-img-grid">
+                  <img src="/uploads/<%= images[0] %>" class="codex-img four-img">
+                  <img src="/uploads/<%= images[1] %>" class="codex-img four-img">
+                  <img src="/uploads/<%= images[2] %>" class="codex-img four-img">
+                  <img src="/uploads/<%= images[3] %>" class="codex-img four-img">
+                </div>
+              <% } %>
+
+            <% } else { %>
+
+              <!-- NO IMAGES -->
+              <% if (colors.length === 0) { %>
+                <div class="codex-placeholder"></div>
+
+              <% } else if (colors.length === 1) { %>
+                <div class="codex-colored-bg" style="background:<%= mainColor %>;"></div>
+
+              <% } else { %>
+                <div class="codex-colored-bg" 
+                     style="background:linear-gradient(to right, <%= gradient %>);">
+                </div>
+              <% } %>
+
+            <% } %>
+
+          </div>
+
+          <!-- TEXT CONTENT -->
+          <div class="codex-content">
+
+            <h4 class="codex-title"
+                style="color:<%= colors.length > 0 ? colors[0].trim() : '#ffffff' %>;">
+                <%= d.title %>
+            </h4>
+
+            <p class="codex-desc">
+              <%= d.description ? d.description.substring(0, 90) : "" %>
+            </p>
+
+          </div>
+
+          <!-- COLOR BAR -->
+          <% if (colors.length === 1) { %>
+
+            <div class="codex-color-bar" style="background:<%= mainColor %>;"></div>
+
+          <% } else if (colors.length > 1) { %>
+
+            <div class="codex-color-bar"
+                 style="background:linear-gradient(to right, <%= gradient %>);"></div>
+
+          <% } else { %>
+
+            <div class="codex-color-bar" style="background:rgba(255,255,255,0.06); backdrop-filter:blur(5px);"></div>
+
+
+          <% } %>
 
         </div>
-      </div>
+
+      </a>
     </div>
+
   <% }) %>
+
 </div>
 
 <%- include("./partials/footer.ejs") %>

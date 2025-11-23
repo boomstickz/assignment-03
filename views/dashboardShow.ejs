@@ -1,12 +1,14 @@
 <%- include("./partials/header.ejs") %>
 
-<h2><%= dash.title %></h2>
+<div class="dashboard-section">
 
-<p><%= dash.description %></p>
+<h2 style="color:white;"><%= dash.title %></h2>
 
-<!-- IMAGES (only show if images exist) -->
+<p class="dashboard-text-light"><%= dash.description %></p>
+
+<!-- IMAGES -->
 <% if (dash.images && dash.images.length > 0) { %>
-  <h3>Images</h3>
+  <h3 style="color:white;">Images</h3>
   <div class="row">
     <% dash.images.forEach(img => { %>
       <div class="col-md-3 mb-3">
@@ -18,32 +20,31 @@
 
 <!-- TAGS -->
 <% if (dash.tags && dash.tags.length > 0) { %>
-  <h3>Tags</h3>
-  <p><%= dash.tags.join(", ") %></p>
+  <h3 style="color:white;">Tags</h3>
+  <p class="tag-item"><%= dash.tags.join(", ") %></p>
 <% } %>
 
 <!-- ABILITIES -->
 <% if (dash.abilities && dash.abilities.length > 0) { %>
-  <h3>Abilities</h3>
+  <h3 style="color:white;">Abilities</h3>
   <ul>
     <% dash.abilities.forEach(a => { %>
-      <li><%= a %></li>
+      <li class="ability-item"><%= a %></li>
     <% }) %>
   </ul>
 <% } %>
 
 <!-- COLORS -->
 <% if (dash.colors && dash.colors.length > 0) { %>
-  <h3>Colors</h3>
-  <p><%= dash.colors.join(", ") %></p>
+  <h3 style="color:white;">Colors</h3>
+  <p class="color-item"><%= dash.colors.join(", ") %></p>
 <% } %>
 
 <hr>
 
 <a href="/dashboards/edit/<%= dash._id %>" class="btn btn-warning">Edit</a>
+<a href="/dashboards/delete/<%= dash._id %>" class="btn btn-danger">Delete</a>
 
-<form action="/dashboards/delete/<%= dash._id %>" method="POST" style="display:inline;">
-  <button class="btn btn-danger">Delete</button>
-</form>
+</div>
 
 <%- include("./partials/footer.ejs") %>

@@ -6,17 +6,33 @@ module.exports.registerPage = (req, res) => {
 };
 
 module.exports.registerUser = async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, confirmPassword } = req.body;
 
-  const hashed = await bcrypt.hash(password, 12);
+  // Passwords must match
+  if (password !== confirmPassword) {
+    return res.render("register", { error: "Passwords do not match." });
+  }
 
-  await User.create({
-    username,
-    password: hashed
-  });
+  // enforce minimum length
+  if (password.length < 6) {
+    return res.render("register", { error: "Password must be at least 6 characters." });
+  }
+
+  // Check if username exists
+  const existingUser = await User.findOne({ username });
+  if (existingUser) {
+    return res.render("register", { error: "Username is already taken." });
+  }
+
+  // Create the user
+  const bcrypt = require("bcryptjs");
+  const hashed = await bcrypt.hash(password, 10);
+
+  await User.create({ username, password: hashed });
 
   res.redirect("/auth/login");
 };
+
 
 module.exports.loginPage = (req, res) => {
   res.render("login");
