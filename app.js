@@ -1,18 +1,20 @@
-// app.js 
+// app.js
+require("dotenv").config();
 
 const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
-require("dotenv").config();
 
 const app = express();
+const mongoUri = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/power-codex";
+
+app.set("view engine", "ejs");
 
 // Body + Static
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use("/uploads", express.static("public/uploads"));
-
 
 // Sessions
 app.use(
@@ -21,10 +23,11 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URI,
+      mongoUrl: mongoUri,
       collectionName: "sessions",
     }),
-    cookie: { maxAge: 1000 * 60 * 60 * 24 }
+   cookie: { maxAge: 1000 * 60 * 60 * 24 },
+
   })
 );
 
@@ -34,22 +37,12 @@ app.use((req, res, next) => {
   next();
 });
 
-// Set EJS
-app.set("view engine", "ejs");
 
 // Connect to MongoDB
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(mongoUri)
   .then(() => console.log("MongoDB Connected"))
-  .catch(err => console.log(err));
-
-
-// Session access  
-app.use((req, res, next) => {
-  res.locals.session = req.session;
-  next();
-});
-
+  .catch(err => console.error("MongoDB connection error:", err));
 
 // Routes
 app.use("/", require("./routes/index"));
@@ -57,4 +50,5 @@ app.use("/auth", require("./routes/auth"));
 app.use("/dashboards", require("./routes/dashboards"));
 
 // Server
-app.listen(3000, () => console.log("Server running on port 3000"));
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Server running on port ${port}`));
