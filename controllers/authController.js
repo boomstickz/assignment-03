@@ -1,48 +1,47 @@
-const User = require("../models/User");
 const bcrypt = require("bcryptjs");
+const User = require("../models/User");
+
+const renderRegister = (res, error = null) => res.render("register", { error });
 
 module.exports.registerPage = (req, res) => {
-  res.render("register");
+  renderRegister(res);
 };
 
 module.exports.registerUser = async (req, res) => {
   const { username, password, confirmPassword } = req.body;
 
-  // Passwords must match
+
   if (password !== confirmPassword) {
-    return res.render("register", { error: "Passwords do not match." });
+    return renderRegister(res, "Passwords do not match.");
   }
 
-  // enforce minimum length
   if (password.length < 6) {
-    return res.render("register", { error: "Password must be at least 6 characters." });
+    return renderRegister(res, "Password must be at least 6 characters.");
   }
 
-  // Check if username exists
   const existingUser = await User.findOne({ username });
   if (existingUser) {
-    return res.render("register", { error: "Username is already taken." });
+    return renderRegister(res, "Username is already taken.");
   }
 
-  // Create the user
-  const bcrypt = require("bcryptjs");
-  const hashed = await bcrypt.hash(password, 10);
 
+  const hashed = await bcrypt.hash(password, 10);
   await User.create({ username, password: hashed });
 
   res.redirect("/auth/login");
 };
 
-
 module.exports.loginPage = (req, res) => {
-  res.render("login");
+  res.render("login", { error: null });
 };
 
 module.exports.loginUser = async (req, res) => {
   const { username, password } = req.body;
-
   const user = await User.findOne({ username });
-  if (!user) return res.redirect("/auth/login");
+
+  if (!user) {
+    return res.render("login", { error: "Invalid username or password." });
+  }
 
   const match = await bcrypt.compare(password, user.password);
   if (!match) return res.redirect("/auth/login");
