@@ -31,7 +31,12 @@ router.post(
   dashboardController.updateDashboard
 );
 
-router.post("/:id/remove-image", requireAuth, dashboardController.removeImage);
+router.post(
+  "/:id/remove-image",
+  requireAuth,
+  upload.none(),
+  dashboardController.removeImage
+);
 
 
 // SHOW DASHBOARD (MUST ALWAYS BE LAST)
