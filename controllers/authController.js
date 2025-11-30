@@ -4,7 +4,10 @@ const User = require("../models/User");
 const githubClientId = process.env.GITHUB_CLIENT_ID;
 const githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
 const githubCallbackUrl =
-  process.env.GITHUB_CALLBACK_URL || "http://localhost:3000/auth/github/callback";
+  process.env.GITHUB_CALLBACK_URL ||
+  (process.env.RENDER_EXTERNAL_URL
+    ? `${process.env.RENDER_EXTERNAL_URL}/auth/github/callback`
+    : "http://localhost:3000/auth/github/callback");
 
 const renderRegister = (res, error = null) => res.render("register", { error });
 
