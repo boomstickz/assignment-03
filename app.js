@@ -10,6 +10,7 @@ const app = express();
 const mongoUri = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/power-codex";
 
 app.set("view engine", "ejs");
+app.set("trust proxy", 1);
 
 // Body + Static
 app.use(express.urlencoded({ extended: true }));
