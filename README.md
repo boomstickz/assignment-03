@@ -31,9 +31,11 @@ A creative worldbuilding and organization dashboard designed for artists, writer
 - Replace or remove individual images
 
 ### Authentication
-- User Registration  
-- User Login / Logout  
+- User Registration
+- User Login / Logout
 - Personalized dashboard collections
+- GitHub OAuth login (configure `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, and `GITHUB_CALLBACK_URL`)
+- Google login/register buttons are present but intentionally disabled until university authorization is granted for student accounts.
 
 ## Visual Aesthetic
 
