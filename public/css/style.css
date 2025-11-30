@@ -156,7 +156,29 @@ input:focus, textarea:focus, select:focus {
 .btn-primary { background:#6bd6ff !important; color:black !important; }
 .btn-warning { background:#d9b95f !important; color:black !important; }
 .btn-danger { background:#d9534f !important; color:white !important; }
+.btn-outline-light {
+    border: 1px dashed rgba(255,255,255,0.35) !important;
+    color: white !important;
+}
 
+.social-login {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 16px;
+    border-radius: 10px;
+}
+
+.social-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 230px;
+    justify-content: center;
+}
+
+.social-icon {
+    font-size: 1.1rem;
+}
 
 /* DASHBOARD CARDS */
 .codex-card-link {
