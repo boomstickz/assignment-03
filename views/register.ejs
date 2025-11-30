@@ -27,14 +27,10 @@
 </form>
 
 <div class="social-login mt-4">
-  <p class="text-info small mb-2">
-    Students can use their school email, but authentication should only be performed
-    using Google Login or GitHub account.
-  </p>
-
+  
   <div class="d-flex flex-wrap gap-3 align-items-center">
     <a class="btn btn-dark social-btn" href="/auth/github">
-      <span class="social-icon" aria-hidden="true">🐙</span>
+      <span class="social-icon" aria-hidden="true">🐈</span>
       Register with GitHub
     </a>
 
@@ -43,15 +39,11 @@
       class="btn btn-outline-light social-btn google-btn"
       onclick="alert('Cloud Google console service is a paid service, student account needs authorization from the university first to implement google login/register.');"
     >
-      <span class="social-icon" aria-hidden="true">🟢</span>
-      Google Register (Disabled)
+      <span class="social-icon" aria-hidden="true">🔴</span>
+      Google Register
     </button>
   </div>
 
-  <p class="text-warning small mt-2 mb-0">
-    Cloud Google console service is a paid service; student accounts need university authorization
-    before Google login/register can be enabled.
-  </p>
 </div>
 
 <%- include("./partials/footer.ejs") %>
