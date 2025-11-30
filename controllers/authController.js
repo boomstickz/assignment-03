@@ -3,12 +3,23 @@ const User = require("../models/User");
 
 const githubClientId = process.env.GITHUB_CLIENT_ID;
 const githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
-const githubCallbackUrl =
-  process.env.GITHUB_CALLBACK_URL ||
-  (process.env.RENDER_EXTERNAL_URL
-    ? `${process.env.RENDER_EXTERNAL_URL}/auth/github/callback`
-    : "http://localhost:3000/auth/github/callback");
+const buildGithubCallbackUrl = req => {
+  if (process.env.GITHUB_CALLBACK_URL) return process.env.GITHUB_CALLBACK_URL;
 
+  if (process.env.RENDER_EXTERNAL_URL) {
+    const trimmed = process.env.RENDER_EXTERNAL_URL.replace(/\/+$/, "");
+    return `${trimmed}/auth/github/callback`;
+  }
+
+  const host = req?.get?.("host");
+  if (host) {
+    const forwardedProto = req.headers["x-forwarded-proto"];
+    const protocol = forwardedProto ? forwardedProto.split(",")[0] : req.protocol;
+    return `${protocol}://${host}/auth/github/callback`;
+  }
+
+  return "http://localhost:3000/auth/github/callback";
+};
 const renderRegister = (res, error = null) => res.render("register", { error });
 
 module.exports.registerPage = (req, res) => {
@@ -84,6 +95,7 @@ module.exports.githubLogin = (req, res) => {
     return res.redirect("/auth/login?error=github");
   }
 
+  const githubCallbackUrl = buildGithubCallbackUrl(req);
   const params = new URLSearchParams({
     client_id: githubClientId,
     redirect_uri: githubCallbackUrl,
@@ -101,6 +113,7 @@ module.exports.githubCallback = async (req, res) => {
   }
 
   try {
+    const githubCallbackUrl = buildGithubCallbackUrl(req);
     const tokenResponse = await fetch("https://github.com/login/oauth/access_token", {
       method: "POST",
       headers: {
